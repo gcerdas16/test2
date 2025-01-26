@@ -1,40 +1,25 @@
-# Image size ~ 400MB
-FROM node:21-alpine3.18 as builder
+# Usa una imagen base de Node.js con Alpine Linux
+FROM node:18-alpine
 
+# Instala las herramientas necesarias
+RUN apk update && apk add --no-cache \
+    python3 \
+    make \
+    g++ \
+    git
+
+# Instala pnpm globalmente
+RUN npm install -g pnpm
+
+# Establece el directorio de trabajo
 WORKDIR /app
 
-RUN corepack enable && corepack prepare pnpm@latest --activate
-ENV PNPM_HOME=/usr/local/bin
-
+# Copia los archivos necesarios al contenedor
 COPY . .
 
-COPY package*.json *-lock.yaml ./
+# Instala dependencias y construye la aplicación
+RUN pnpm install
+RUN pnpm run build
 
-RUN apk add --no-cache --virtual .gyp \
-        python3 \
-        make \
-        g++ \
-    && apk add --no-cache git \
-    && pnpm install && pnpm run build \
-    && apk del .gyp
-
-FROM node:21-alpine3.18 as deploy
-
-WORKDIR /app
-
-ARG PORT
-ENV PORT $PORT
-EXPOSE $PORT
-
-COPY --from=builder /app/assets ./assets
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/*.json /app/*-lock.yaml ./
-
-RUN corepack enable && corepack prepare pnpm@latest --activate 
-ENV PNPM_HOME=/usr/local/bin
-
-RUN npm cache clean --force && pnpm install --production --ignore-scripts \
-    && addgroup -g 1001 -S nodejs && adduser -S -u 1001 nodejs \
-    && rm -rf $PNPM_HOME/.npm $PNPM_HOME/.node-gyp
-
+# Comando de inicio para producción
 CMD ["pnpm", "start"]
