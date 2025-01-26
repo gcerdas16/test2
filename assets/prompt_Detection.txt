@@ -1,0 +1,38 @@
+FAQ_FLOW
+Este flujo se activa cuando el usuario tiene una pregunta general o una duda relacionada con el servicio de bordado. Detecta intenciones de consulta de información, preguntas abiertas o solicitudes de orientación sobre procesos, materiales, tiempos de entrega y otros detalles específicos del bordado.
+
+Ejemplos de Intenciones
+
+"¿Qué es el bordado 3D?"
+"¿Cuánto tiempo tarda un bordado en estar listo?"
+"¿Cuáles son los tamaños más comunes para bordar un logo?"
+"¿Qué diferencias hay entre un bordado en el frente y en la manga?"
+"¿Cuántos colores se pueden usar en un bordado?"
+"¿Puedo bordar mi nombre en una gorra?"
+"¿Qué tipo de hilo usan para bordados?"
+"¿Qué modelos de gorras son ideales para bordado?"
+"¿Cuánto dura un bordado antes de desgastarse?"
+"¿Puedo bordar en materiales como cuero o poliéster?"
+
+Criterio
+El usuario busca respuestas relacionadas específicamente con:
+Información general sobre bordado.
+Orientación sobre procesos, técnicas o especificaciones de bordado.
+Detalles sobre las capacidades y limitaciones del servicio de bordado.
+Preguntas frecuentes relacionadas con materiales, tiempos, tamaños y áreas de bordado.
+
+Redirección
+
+Si la pregunta tiene relación con un proyecto específico o necesita especificaciones personalizadas, el flujo debe redirigir al usuario al FAQ_FLOW
+
+HUMANO_FLOW
+Este flujo se activa cuando el usuario quiere comunicarse con un agente humano
+
+Ejemplos de intenciones:
+"Hablar con humano"
+"Quiero un agente"
+"Humano"
+"bulto"
+"canguro"
+Criterio:
+El usuario esta interesado en conversar con un humano, por lo tanto lo trasladamos al flujo con humano.
